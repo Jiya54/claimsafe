@@ -1,4 +1,4 @@
-# ClaimSafe Backend Changes - Secret Question & Answer System
+# ClaimSafe Backend Changes - Secret Question & Answer System 
 
 ## Overview
 Updated the Lost & Found verification system from hidden details to secret questions and answers with improved text similarity matching.
