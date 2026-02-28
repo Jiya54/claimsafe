@@ -1,4 +1,4 @@
-const BASE = 'http://localhost:5000';
+const BASE = 'https://claimsafe-backend.onrender.com';
 
 const noData      = document.getElementById('noData');
 const resultWrap  = document.getElementById('resultWrap');
