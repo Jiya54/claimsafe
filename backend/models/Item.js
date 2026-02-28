@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const itemSchema = new mongoose.Schema({
   title: String,                 // e.g. Black Wallet
   description: String,           // Public description
-  hiddenDetail: String,          // Secret detail (metro card, scratch, etc.)
+  secretQuestion: String,        // Question only founder knows (e.g. "What color is the zipper?")
+  secretAnswer: String,          // Answer to verify (e.g. "blue")
   image: String,                 // Image filename
   location: {
     latitude: Number,

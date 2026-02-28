@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClaimSafe — Smart Lost & Found</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body { background: #fff; overflow: hidden; }
+    .hero {
+      position: relative; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; padding: 1.5rem;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: #eef2ff; color: var(--indigo);
+      border: 1px solid #c7d2fe;
+      padding: .35rem .9rem; border-radius: 99px;
+      font-size: .75rem; font-weight: 600; letter-spacing: .05em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700; line-height: 1.0;
+      letter-spacing: -2px; text-align: center;
+      color: var(--gray-900);
+    }
+    .hero-title span { color: var(--indigo); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--gray-400);
+      margin: 1rem 0 2.5rem; text-align: center;
+      font-weight: 500;
+    }
+    .cta-row {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cta-card {
+      display: flex; flex-direction: column; align-items: center;
+      gap: .75rem; padding: 2rem 2.5rem;
+      background: #fff; border: 1.5px solid var(--gray-200);
+      border-radius: 20px; cursor: pointer; text-decoration: none;
+      transition: all .25s; width: 200px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    }
+    .cta-card:hover { transform: translateY(-5px); border-color: var(--indigo-lt); box-shadow: var(--shadow-lg); }
+    .cta-card .icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .cta-card .cta-title {
+      font-family: 'Clash Display', sans-serif;
+      font-weight: 700; font-size: 1.1rem; color: var(--gray-900);
+    }
+    .cta-card .cta-hint { font-size: .78rem; color: var(--gray-400); }
+    .cta-card.found .icon { background: #eef2ff; }
+    .cta-card.lost  .icon { background: #fef3c7; }
+    .arrow {
+      font-size: .75rem; color: var(--gray-400);
+      transition: transform .2s, color .2s;
+    }
+    .cta-card:hover .arrow { transform: translateX(4px); color: var(--indigo); }
+
+    .footer-line {
+      position: absolute; bottom: 2rem;
+      font-size: .78rem; color: var(--gray-400);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-blob blob-1"></div>
+      <div class="hero-blob blob-2"></div>
+      <div class="hero-blob blob-3"></div>
+    </div>
+
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center">
+      <div class="tag enter">
+        <span style="width:6px;height:6px;background:var(--indigo);border-radius:50%;animation:blink 2s ease infinite"></span>
+        Ownership Verified by AI
+      </div>
+
+      <h1 class="hero-title enter-d1">
+        Claim<span>Safe</span>
+      </h1>
+      <p class="hero-sub enter-d2">Smart Lost &amp; Found</p>
+
+      <div class="cta-row enter-d3">
+        <a href="found.html" class="cta-card found">
+          <div class="icon">🔍</div>
+          <span class="cta-title">I Found It</span>
+          <span class="cta-hint">Report an item</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="claim.html" class="cta-card lost">
+          <div class="icon">🎒</div>
+          <span class="cta-title">I Lost It</span>
+          <span class="cta-hint">Claim an item</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <p class="footer-line">Confident ownership · Zero fraud · Instant verification</p>
+  </div>
+</body>
+</html>

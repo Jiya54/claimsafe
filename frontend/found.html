@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Found — ClaimSafe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body { background: var(--gray-50); }
+    .page { max-width: 520px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    /* two-tone header strip */
+    .page-header {
+      background: linear-gradient(135deg, var(--indigo) 0%, #818cf8 100%);
+      border-radius: 20px; padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.5rem; color: #fff;
+    }
+    .page-header h1 {
+      font-family:'Clash Display',sans-serif;
+      font-size: 2rem; font-weight: 700; letter-spacing:-.5px;
+    }
+    .page-header p { font-size:.875rem; opacity:.8; margin-top:.25rem; }
+
+    /* lock icon badge */
+    .lock-badge {
+      display:inline-flex;align-items:center;gap:.4rem;
+      background:rgba(255,255,255,.15);border-radius:8px;
+      padding:.35rem .7rem;font-size:.75rem;margin-bottom:1rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>ClaimSafe</a>
+    <span class="nav-crumb">/ Report Found</span>
+  </nav>
+
+  <div class="page">
+    <div class="page-header enter">
+      <div class="lock-badge">🔍 Finder Mode</div>
+      <h1>Found Something?</h1>
+      <p>Add a secret clue only the real owner would know.</p>
+    </div>
+
+    <div class="card card-lg p-8 enter-d1">
+      <form id="foundForm">
+        <div class="form-group">
+          <label class="form-label" for="title">Item Name</label>
+          <input class="form-control" type="text" id="title"
+            placeholder="e.g. Blue Backpack" required/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="description">Public Description</label>
+          <textarea class="form-control" id="description"
+            placeholder="What does it look like?" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="secretQuestion">
+            🔒 Secret Verification Question
+          </label>
+          <input class="form-control" type="text" id="secretQuestion"
+            placeholder="e.g. What color is the zipper?" required/>
+          <p class="form-hint">Only the real owner should know the answer.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="secretAnswer">
+            🔐 Secret Answer
+          </label>
+          <input class="form-control" type="text" id="secretAnswer"
+            placeholder="e.g. blue" required/>
+          <p class="form-hint">The answer to your secret question. Never shown publicly.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="itemImage">Item Photo</label>
+          <input class="form-control" type="file" id="itemImage" 
+            accept="image/*" required/>
+          <p class="form-hint">Upload a clear photo of the item (JPEG, PNG, GIF, WebP)</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="latitude">Latitude</label>
+            <input class="form-control" type="number" id="latitude" 
+              placeholder="0.0000" step="0.0001" required/>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="longitude">Longitude</label>
+            <input class="form-control" type="number" id="longitude" 
+              placeholder="0.0000" step="0.0001" required/>
+          </div>
+        </div>
+
+        <button type="button" id="geolocateBtn" class="btn btn-ghost btn-full" style="margin-bottom: 1rem;">
+          📍 Use My Current Location
+        </button>
+
+        <div class="divider"></div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">
+          Submit Report
+        </button>
+
+        <div class="alert alert-success" id="successAlert">
+          <span class="alert-icon">✅</span>
+          <div>
+            <strong>Item reported!</strong><br>
+            <span class="text-sm">Claimants can now submit ownership requests.</span>
+          </div>
+        </div>
+        <div class="alert alert-error" id="errorAlert">
+          <span class="alert-icon">❌</span>
+          <span id="errorMsg">Something went wrong. Please try again.</span>
+        </div>
+      </form>
+    </div>
+
+    <p class="text-center text-sm text-muted mt-6 enter-d2">
+      Lost something? <a href="claim.html" style="color:var(--indigo);font-weight:600">Browse items →</a>
+    </p>
+  </div>
+
+  <script src="js/found.js"></script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verification Result — ClaimSafe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body { background: var(--gray-50); }
+    .page { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .page-hero {
+      margin-bottom: 2rem;
+    }
+    .page-hero h1 {
+      font-family:'Clash Display',sans-serif;
+      font-size:2rem;font-weight:700;letter-spacing:-.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    /* No data state */
+    .state-panel {
+      text-align:center; padding:4rem 2rem;
+    }
+    .state-panel .state-icon { font-size:2.5rem; margin-bottom:.75rem; }
+    .state-panel h3 {
+      font-family:'Clash Display',sans-serif;
+      font-size:1.4rem;font-weight:600;color:var(--gray-900);
+      margin-bottom:.5rem;
+    }
+    .state-panel p { color:var(--gray-400);font-size:.9rem; }
+
+    /* Score ring visualization */
+    .score-ring-wrap {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 2rem;
+    }
+    .score-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .score-ring-bg {
+      stroke: var(--gray-200);
+      stroke-width: 8;
+      fill: none;
+    }
+    .score-ring-fill {
+      stroke: #059669;
+      stroke-width: 8;
+      fill: none;
+      stroke-dasharray: 314.159;
+      stroke-dashoffset: 314.159;
+      transition: stroke-dashoffset 0.6s ease, stroke 0.3s ease;
+      stroke-linecap: round;
+    }
+    .score-ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-family:'Clash Display',sans-serif;
+    }
+    .score-ring-number {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #059669;
+      line-height: 1;
+    }
+    .score-ring-label {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      margin-top: 0.5rem;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 6px;
+      background: var(--gray-200);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #34d399, #059669);
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+
+    /* Verdict strip */
+    .verdict-strip {
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid;
+    }
+    .verdict-strip.verdict-pass {
+      background: rgba(5, 150, 105, 0.08);
+      border-left-color: #059669;
+    }
+    .verdict-strip.verdict-fail {
+      background: rgba(220, 38, 38, 0.08);
+      border-left-color: #dc2626;
+    }
+    .verdict-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .verdict-title {
+      font-family:'Clash Display',sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.25rem;
+    }
+    .verdict-sub {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+
+    /* Claims section */
+    .claims-section {
+      margin: 3rem 0;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 0.5rem;
+      border: 1px solid var(--gray-200);
+      display: none;
+    }
+    .claims-section h3 {
+      font-family:'Clash Display',sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--gray-900);
+    }
+    .claim-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      background: var(--gray-50);
+      border-radius: 0.4rem;
+      gap: 1rem;
+    }
+    .claim-rank {
+      font-weight: 600;
+      color: var(--indigo);
+      min-width: 40px;
+    }
+    .claim-confidence {
+      font-weight: 600;
+      color: var(--gray-900);
+      min-width: 50px;
+    }
+    .claim-desc {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      flex: 1;
+    }
+
+    /* Location section */
+    .location-section {
+      display: none;
+      margin: 2rem 0;
+    }
+    .location-btn-wrap {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .location-card {
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 0.5rem;
+      display: none;
+      margin-bottom: 1rem;
+    }
+    .location-coords {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .location-coord-item {
+      padding: 0.75rem;
+      background: var(--gray-50);
+      border-radius: 0.4rem;
+    }
+    .location-coord-label {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .location-coord-value {
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    .location-maps-link {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      background: var(--indigo);
+      color: white;
+      border-radius: 0.4rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .location-maps-link:hover {
+      opacity: 0.9;
+    }
+
+    .location-error {
+      display: none;
+      padding: 1rem;
+      background: rgba(220, 38, 38, 0.08);
+      border: 1px solid #fecaca;
+      border-radius: 0.4rem;
+      color: #991b1b;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .location-error.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>ClaimSafe</a>
+    <span class="nav-crumb">/ Verification</span>
+  </nav>
+
+  <div class="page">
+    <!-- No Data State -->
+    <div id="noData" style="display:none" class="state-panel">
+      <div class="state-icon">📋</div>
+      <h3>No Claim Data</h3>
+      <p>Please submit a claim first.</p>
+      <a href="claim.html" class="btn btn-primary" style="margin-top:1rem">← Back to Claims</a>
+    </div>
+
+    <!-- Result Wrap -->
+    <div id="resultWrap" style="display:none">
+      <div class="page-hero">
+        <h1>Your Verification Result</h1>
+      </div>
+
+      <!-- Score Ring -->
+      <div class="score-ring-wrap">
+        <svg class="score-ring" viewBox="0 0 120 120">
+          <circle class="score-ring-bg" cx="60" cy="60" r="50"/>
+          <circle id="ringFill" class="score-ring-fill" cx="60" cy="60" r="50"/>
+        </svg>
+        <div class="score-ring-text">
+          <div id="scoreNum" class="score-ring-number">0</div>
+          <div class="score-ring-label">/ 100</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <!-- Verdict -->
+      <div id="verdictStrip" class="verdict-strip">
+        <div id="verdictIcon" class="verdict-icon">✅</div>
+        <div id="verdictTitle" class="verdict-title">High Confidence</div>
+        <div id="verdictSub" class="verdict-sub">Score details here</div>
+      </div>
+
+      <!-- Claims Ranking -->
+      <div id="claimsSection" class="claims-section">
+        <h3>All Claims for This Item (Ranked)</h3>
+        <div id="claimsList"></div>
+      </div>
+
+      <!-- Location Reveal Section -->
+      <div id="locationSection" class="location-section">
+        <div class="location-btn-wrap">
+          <button id="revealBtn" class="btn btn-primary">📍 Reveal Location</button>
+        </div>
+
+        <div id="locationError" class="location-error">
+          <span id="locationErrorMsg"></span>
+        </div>
+
+        <div id="locationCard" class="location-card">
+          <h3 style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; margin-bottom:1rem; color:var(--gray-900);">Item Location</h3>
+          <div class="location-coords">
+            <div class="location-coord-item">
+              <div class="location-coord-label">Latitude</div>
+              <div id="latVal" class="location-coord-value">--</div>
+            </div>
+            <div class="location-coord-item">
+              <div class="location-coord-label">Longitude</div>
+              <div id="lngVal" class="location-coord-value">--</div>
+            </div>
+          </div>
+          <a id="mapsLink" href="#" target="_blank" class="location-maps-link">
+            📍 Open in Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:3rem">
+        <a href="claim.html" class="btn btn-ghost">← Back to Claims</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/verify.js"></script>
+</body>
+</html>

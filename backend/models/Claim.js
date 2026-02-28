@@ -5,8 +5,8 @@ const claimSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Item"
   },
-  claimantDescription: String,   // What user types
-  confidenceScore: Number,        // % match
+  claimerAnswer: String,         // Claimer's answer to the secret question
+  confidenceScore: Number,        // % match (0-100)
   createdAt: {
     type: Date,
     default: Date.now

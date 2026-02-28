@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claim Item — ClaimSafe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body { background: var(--gray-50); }
+    .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .page-hero {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .page-hero h1 {
+      font-family:'Clash Display',sans-serif;
+      font-size:2rem;font-weight:700;letter-spacing:-.5px;
+    }
+
+    /* Item card */
+    .item-card { padding: 1.4rem; }
+    .item-card .item-title {
+      font-family:'Clash Display',sans-serif;
+      font-size:1.1rem;font-weight:600;
+      color:var(--gray-900);
+      margin-bottom:.35rem;
+    }
+    .item-card .item-desc {
+      font-size:.85rem;color:var(--gray-400);
+      line-height:1.5; margin-bottom:1rem;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .item-card .item-footer {
+      display:flex;align-items:center;justify-content:space-between;
+    }
+
+    /* State panels */
+    .state-panel {
+      text-align:center; padding:4rem 2rem;
+    }
+    .state-panel .state-icon { font-size:2.5rem; margin-bottom:.75rem; }
+    .state-panel h3 {
+      font-family:'Clash Display',sans-serif;
+      font-size:1.4rem;font-weight:600;color:var(--gray-900);
+      margin-bottom:.5rem;
+    }
+    .state-panel p { color:var(--gray-400);font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>ClaimSafe</a>
+    <span class="nav-crumb">/ Browse Items</span>
+  </nav>
+
+  <div class="page">
+    <div class="page-hero enter">
+      <div>
+        <h1>Lost Something?</h1>
+        <p class="text-sm text-muted mt-1">Find your item and prove ownership.</p>
+      </div>
+      <button class="btn btn-ghost" onclick="loadItems()">
+        ↻ Refresh
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div id="stateLoading" class="state-panel">
+      <div class="spinner spinner-indigo" style="width:36px;height:36px;border-width:3px;margin:0 auto 1rem"></div>
+      <p class="text-muted">Loading items…</p>
+    </div>
+
+    <!-- Error -->
+    <div id="stateError" class="state-panel" style="display:none">
+      <div class="state-icon">⚠️</div>
+      <h3>Couldn't Load Items</h3>
+      <p>Make sure the backend is running at <code style="color:var(--indigo)">localhost:5000</code></p>
+      <button class="btn btn-outline mt-4" onclick="loadItems()">Try Again</button>
+    </div>
+
+    <!-- Empty -->
+    <div id="stateEmpty" class="state-panel" style="display:none">
+      <div class="state-icon">📭</div>
+      <h3>No Items Yet</h3>
+      <p>Nothing has been reported. <a href="found.html" style="color:var(--indigo)">Be the first?</a></p>
+    </div>
+
+    <!-- Grid -->
+    <div id="itemsGrid" class="items-grid" style="display:none"></div>
+  </div>
+
+  <!-- Claim Modal -->
+  <div class="modal-backdrop" id="claimModal">
+    <div class="modal">
+      <div class="flex items-center justify-between mb-4">
+        <h2 style="font-family:'Clash Display',sans-serif;font-size:1.25rem;font-weight:700">Answer Verification Question</h2>
+        <button id="closeModal" style="background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--gray-400);line-height:1">×</button>
+      </div>
+      
+      <div id="questionSection">
+        <p class="text-sm text-muted mb-4">The founder set a verification question. Answer correctly to prove ownership.</p>
+        
+        <div class="form-group">
+          <label class="form-label">🔒 Question</label>
+          <div id="secretQuestion" style="padding:1rem;background:var(--gray-50);border-radius:0.5rem;border-left:3px solid var(--indigo);color:var(--gray-900);font-weight:500"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your Answer</label>
+          <input class="form-control" id="claimerAnswer" type="text" 
+            placeholder="Type your answer here…"/>
+        </div>
+      </div>
+
+      <div class="alert alert-error" id="modalError">
+        <span class="alert-icon">❌</span>
+        <span id="modalErrorMsg">Error</span>
+      </div>
+
+      <div class="grid-2 mt-4">
+        <button class="btn btn-ghost btn-full" id="cancelClaim">Cancel</button>
+        <button class="btn btn-primary btn-full" id="submitClaim">Verify →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/claim.js"></script>
+</body>
+</html>
