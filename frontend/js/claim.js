@@ -1,4 +1,4 @@
-const BASE = 'http://localhost:5000';
+const BASE = 'https://claimsafe-backend.onrender.com';
 
 const grid         = document.getElementById('itemsGrid');
 const stLoading    = document.getElementById('stateLoading');
