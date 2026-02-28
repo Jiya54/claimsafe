@@ -36,3 +36,9 @@
  - [x]  -open index.html
 
 ### Screenshots
+1.https://drive.google.com/file/d/1oVkNV0H7RkG97RxnDqtVjnqXuWFJmrLr/view?usp=drive_link
+2.https://drive.google.com/file/d/1MPnXgnOQl52yfirjn_RB-JxmfiSn6vby/view?usp=drive_link
+3.https://drive.google.com/file/d/1ig5HsbvqXH0Q6XCHqwQZiFZN1S-CDLU9/view?usp=drive_link
+
+### DEMO VIDEO
+- [x] https://drive.google.com/file/d/19ASI6FmmKN-MLglDr8FzLZS_aZXAqbs9/view?usp=drive_link
